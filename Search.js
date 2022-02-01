@@ -8,9 +8,10 @@ const Search = () => {
 
   return (
     <Searchbar
-      placeholder="Search"
+      placeholder="Search for a login"
       onChangeText={onChangeSearch}
       value={searchQuery}
+      style={{  width: '90%', alignSelf:"center"}}
     />
   );
 };
