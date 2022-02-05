@@ -1,30 +1,22 @@
-import React from 'react';
-import { View, Text, ImageBackground, StyleSheet } from 'react-native';
-import Search from './Search';
-import image from './assets/42.jpeg'
+import React from "react";
+import SearchView from "./SearchView";
+import DetailsScreen from "./DetailsScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <View style={styles.container}>
-      <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-        <Search />
-      </ImageBackground>
-    </View>
-  )
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center', 
-    alignItems: 'center'
-  },
-  image: {
-    flex: 1,
-    justifyContent: "center",
-    width: '100%',
-  },
-})
-
+    <>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="Search" component={SearchView}  options={{ headerShown: false }}/>
+            <Stack.Screen name="Details" component={DetailsScreen}  />
+          </Stack.Navigator>
+        </NavigationContainer>
+  </>
+  );
+};
 
 export default App;
