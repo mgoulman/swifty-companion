@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import {
   StyleSheet,
-  View,
   Button,
   TextInput,
   ImageBackground,
-  SafeAreaView
+  SafeAreaView,
+  Image,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import image from "./assets/42.jpeg";
+import logo from "./assets/42.png";
 
 const SearchView = ({ navigation }) => {
   const [login, setText] = useState("");
@@ -23,7 +24,7 @@ const SearchView = ({ navigation }) => {
           "83647c879d645ceb70e5dca1a744cf1c83b641a436317ee258a80b2812a0b0a2",
         grant_type: "client_credentials",
       });
-      
+
       if (token.data) {
         return token.data;
       }
@@ -42,6 +43,7 @@ const SearchView = ({ navigation }) => {
           },
         }
       );
+
       navigation.navigate("Details", { data: data.data });
     } catch (error) {
       alert(error.message);
@@ -52,7 +54,8 @@ const SearchView = ({ navigation }) => {
     if (login != "") {
       try {
         var token = await AsyncStorage.getItem("access_token");
-        if (token == null) {
+
+        if (token !== null) {
           token = JSON.parse(token);
 
           if (
@@ -66,7 +69,7 @@ const SearchView = ({ navigation }) => {
           token = await getToken();
           await AsyncStorage.setItem("access_token", JSON.stringify(token));
         }
-       
+
         await sendRequest(login, token);
       } catch (error) {
         console.log(JSON.stringify(error));
@@ -80,6 +83,7 @@ const SearchView = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+        <Image source={logo} style={{ width: 150, height: 150 }} />
         <TextInput
           style={styles.searchbar}
           placeholder="Enter a login"
